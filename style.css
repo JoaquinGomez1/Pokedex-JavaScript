@@ -1,0 +1,69 @@
+.wrapper{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.headContainer{
+	background-color: rgb(196, 59, 59);
+	color:white;
+	display:flex;
+	justify-content: center;
+	flex-direction: column;
+	height: 16em;
+	border: 1px solid #474545;
+}
+
+.myLogo, .searchBar{
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	width:;
+}
+.searchBar{
+	display:flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.pokmnInfo{
+	margin-top:20px;
+	border: 1px solid  black;
+}
+.row{
+	height: 9em;
+}
+
+.col-md-2{
+	border: 1px solid black;
+	height: inherit;
+}
+
+.pokemon-card{
+	display:flex, inline-block;
+	font-family: sans-serif;
+	font-size: 13px;
+	justify-content: center;
+	align-items: center;
+	text-transform: capitalize;
+	text-align: center;
+	user-select: none;
+	color:white;
+}
+
+.pokemon-card:hover, .pokemon-card:active{
+	cursor: pointer;
+	box-shadow: 0px 0px 4px 5px #424345;
+	z-index:1;
+}
+.pokemon-card:active{
+	transform: translateY(4px);
+}
+
+.PkmType{
+	flex-direction: column;
+	justify-content: center;
+	align-items: baseline;
+	font-size:11px;
+}
