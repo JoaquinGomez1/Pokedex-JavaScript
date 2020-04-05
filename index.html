@@ -16,7 +16,7 @@
 				</div>
 				<div class="container searchBar row">
 					<input class="searcher" type="text" placeholder="Search a pokemon">
-					<input type="submit" value="Search" onclick="searchPkm()">
+					<input id="searchBtn" type="submit" value="Search" onclick="searchPkm()">
 				</div>
 			</div>
 		</div>
@@ -26,9 +26,12 @@
 			</div>
 		</div>
 
-		<div class="container pkmInfoScreen">
+		<div class="infoScr">
+			<div class="infoScrContainer">
+				<span class="closeInfoScr">X</span>
+				<div class="scrPkmInfo"></div>
+			</div>
 		</div>
-
 	</div>
 </body>
 	<script src="app.js"></script>
