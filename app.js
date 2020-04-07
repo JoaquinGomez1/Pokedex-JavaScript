@@ -60,9 +60,6 @@ Promise.all(pokemonList)  //Wait for every result to load before showing them to
  	}
  })
 
-
-
-
  function getBackgroundColor(pokmType){
  	const objColors = {
  		fire: '#d95e3f',
@@ -127,12 +124,26 @@ function getPrimaryType(types){
 	}
 }
 
-function displayInfoScreen(pokemonId){
+function getBothTypes(pokemon){
+			if(pokemon.type.length == 2){
+					return [pokemon.type[0].type.name, pokemon.type[1].type.name]
+			}else{
+				return pokemon.type[0].type.name;
+			}
+}
 
+function getPokemonStats(pokemon){
+	let list = []
+	for(let i = 0; i < pokemon.stats.length; i++){
+		list.push(`${pokemon.stats[i].stat.name}: ${pokemon.stats[i].base_stat}`)
+	}
+	return list
+}
+
+function displayInfoScreen(pokemonId){
 	let infoScr     = document.querySelector('.infoScr');
 	let closeBtn    = document.querySelector('.closeInfoScr');
 	let infoContent = document.querySelector('.scrPkmInfo');
-
 	let controlList = []
 	let controlClasses = ['pkmImgInfo', 'pkmNameInfo',
 	'pkmTypesInfo', 'pkmIdInfo','pkmStatsInfo','pkmAbilitiesInfo']
@@ -148,20 +159,6 @@ function displayInfoScreen(pokemonId){
 			controlList.push(myVar)
 		}
 	}
-	// let imgDiv = document.createElement('img');
-	// let nameDiv = document.createElement('div');
-	// let typesDiv = document.createElement('div');
-	// let idDiv = document.createElement('div');
-	// let statsDiv = document.createElement('div');
-	// let abilityDiv = document.createElement('div');
-
-	// imgDiv.classList.add('pkmImgInfo')
-	// nameDiv.classList.add('pkmNameInfo')
-	// typesDiv.classList.add('pkmTypesInfo')
-	// idDiv.classList.add('pkmIdInfo')
-	// statsDiv.classList.add('pkmStatsInfo')
-
-
 
 	infoScr.style.display = 'block';
 
@@ -177,44 +174,35 @@ function displayInfoScreen(pokemonId){
 		closeScreen(controlClasses);
 	}
 
-	Promise.all(pokemonList).then((result)=>{
+	Promise.all(pokemonList).then((result)=>{  // Creating the information screen's content
 		let thisPokemon = result[pokemonId - 1]
-		console.log(thisPokemon);
-		let pokemonContent = ['img','name','type.type.name', 'id', 'stats','abilities']
+		let pokemonContent = ['img','name', 'types', 'id', 'stats','abilities']
+		let pokemonTypesList = getBothTypes(thisPokemon);
+		let pokemonStatsList = getPokemonStats(thisPokemon);
 
-		for(let i = 0; i < 6; i++){
+		for(let i = 0; i < pokemonContent.length; i++){
 			if(i == 0){
 				controlList[i].src = thisPokemon.img;
-				infoContent.appendChild(controlList[i])
-			}else{
-				controlList[i].innerHTML = thisPokemon[pokemonContent[i]]
-				infoContent.appendChild(controlList[i])
+				infoContent.appendChild(controlList[i]);
+			}else if(i == 2){
+				controlList[i].innerHTML = pokemonTypesList;
+				infoContent.appendChild(controlList[i]);
+			}else if(pokemonContent[i] == 'stats'){
+				controlList[i].innerHTML = pokemonStatsList;
+				infoContent.appendChild(controlList[i]);
 			}
-		}
+			else{
+				controlList[i].innerHTML = thisPokemon[pokemonContent[i]];
+				infoContent.appendChild(controlList[i]);
+			} // For loop
 
-		
-
-		// imgDiv.src = thisPokemon.img;
-		// nameDiv.innerHTML = thisPokemon.name;
-		// typesDiv.innerHTML = thisPokemon.types;
-		// idDiv.innerHTML = thisPokemon.id;
-		// statsDiv.innerHTML = thisPokemon.stats;
-
-		// infoContent.appendChild(imgDiv);
-		// infoContent.appendChild(nameDiv);
-		// infoContent.appendChild(typesDiv);
-		// infoContent.appendChild(idDiv);
-		// infoContent.appendChild(statsDiv);
-
+			controlList[i].style.textTransform = 'capitalize'
+		} //Promise
 	})
 }
 
 function closeScreen(controlClasses){
-	// let img = document.querySelector('.pkmImgInfo')
-	 let infoContent = document.querySelector('.scrPkmInfo');
-
-	// infoContent.removeChild(img);
-
+	let infoContent = document.querySelector('.scrPkmInfo');
 	for(let i = 0; i < 6; i++){
 		let element = document.querySelector(`.${controlClasses[i]}`)
 		infoContent.removeChild(element);
