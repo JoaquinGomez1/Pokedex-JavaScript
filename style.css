@@ -79,7 +79,9 @@
   	padding: 40px;
   	border: 1px solid #888;
   	width: 50%; 
-  	height: 70%;}
+  	height: 70%;	
+  }
+
 
 @media (max-width: 768px){
 	.infoScrContainer{
@@ -110,13 +112,13 @@
 	display:flex,inline-block;
 	margin-top: 90px;
 	width: 100%;
-	height: 40%;
+	height: 50%;
 	border:3px solid black;
 	text-transform: capitalize;
 }
 
 .pkmImgInfo{
-	height: 200px;
+	height: 100%;
 	display: inline-block;
 	float: left;
 	margin:auto;
@@ -131,22 +133,32 @@
 }
 
 .toTopBtn{
+	border-radius: 8px;
 	background: #bd4b5b;
 	position: fixed;
+	right: 8%;
+	top: 12em;
 	height: 40px;
 	width: 40px;
 	display: flex;
 	justify-content: center;
 	align-items:center;
+	z-index: 2;
+	box-shadow: 2px 4px 3px #707070;
+}
 
+.toTopBtn:active{
+	transform: translateY(4px);
 }
 
 a{
 	font-size: 45px;
+	size:45px;
 	color:white;
+	user-select: none;
 }
 a:hover{
 	color:#363636;
-	user-select: none;
 	text-decoration: none;
 }
+
