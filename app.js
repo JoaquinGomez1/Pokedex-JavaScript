@@ -103,6 +103,7 @@ function searchPkm(){
 			if(result[i].name == input || result[i].id == input){
 				let goTo = document.getElementById(`pokemon-${result[i].id}`);
  				goTo.scrollIntoView({block: "center"});
+
 			}
 		}
 	})
@@ -110,7 +111,7 @@ function searchPkm(){
 
 function getPrimaryType(types){ 
 	if(types.length >= 2){
-		if(types[0].type.name == 'normal'){
+		if(types[0].type.name == 'normal'){  // if there is more than one type ignores the normal type 
 			return types[1].type.name;
 
 		}else if(types[1].type.name == 'normal'){
@@ -174,11 +175,25 @@ function displayInfoScreen(pokemonId){
 		closeScreen(controlClasses);
 	}
 
+	createInfoScrContent(pokemonId, controlList);
+
+}
+
+function closeScreen(controlClasses){
+	let infoContent = document.querySelector('.scrPkmInfo');
+	for(let i = 0; i < 6; i++){
+		let element = document.querySelector(`.${controlClasses[i]}`)
+		infoContent.removeChild(element);
+	}
+}
+
+function createInfoScrContent(pokemonId, controlList){
 	Promise.all(pokemonList).then((result)=>{  // Creating the information screen's content
 		let thisPokemon = result[pokemonId - 1]
 		let pokemonContent = ['img','name', 'types', 'id', 'stats','abilities']
 		let pokemonTypesList = getBothTypes(thisPokemon);
 		let pokemonStatsList = getPokemonStats(thisPokemon);
+		let infoContent = document.querySelector('.scrPkmInfo');
 
 		for(let i = 0; i < pokemonContent.length; i++){
 			if(i == 0){
@@ -194,17 +209,7 @@ function displayInfoScreen(pokemonId){
 			else{
 				controlList[i].innerHTML = thisPokemon[pokemonContent[i]];
 				infoContent.appendChild(controlList[i]);
-			} // For loop
-
-			controlList[i].style.textTransform = 'capitalize'
-		} //Promise
+			} 
+		}
 	})
-}
-
-function closeScreen(controlClasses){
-	let infoContent = document.querySelector('.scrPkmInfo');
-	for(let i = 0; i < 6; i++){
-		let element = document.querySelector(`.${controlClasses[i]}`)
-		infoContent.removeChild(element);
-	}
 }
