@@ -83,15 +83,6 @@
   }
 
 
-@media (max-width: 768px){
-	.infoScrContainer{
-		background-color: #fefefe;
-	  	margin: 6% auto; 
-	  	border: 1px solid #888;
-	  	width: 100%; 
-	  	height: 70%;
-	}
-}
 
 .closeInfoScr{
 	color: #aaa;
@@ -109,20 +100,25 @@
 }
 
 .scrPkmInfo{
-	display:flex,inline-block;
+	display:flex;
+	flex-direction: column;
 	margin-top: 90px;
 	width: 100%;
-	height: 50%;
+	height: 80%;
 	border:3px solid black;
 	text-transform: capitalize;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
 }
 
 .pkmImgInfo{
-	height: 100%;
+	height: 40%;
 	display: inline-block;
 	float: left;
 	margin:auto;
 }
+
 
 .pkmNameInfo{
 	font-size:28px;
@@ -131,6 +127,7 @@
 .pkmTypesInfo{
 	font-size: 20px;
 }
+
 
 .toTopBtn{
 	border-radius: 8px;
@@ -162,3 +159,39 @@ a:hover{
 	text-decoration: none;
 }
 
+
+@media (max-width: 768px){
+	.infoScrContainer{
+		background-color: #fefefe;
+	  	margin: 6% auto; 
+	  	border: 1px solid #888;
+	  	width: 100%; 
+	  	height: 90vh;
+	  	font-size: 14px;
+	}
+
+	.pkmImgInfo{
+		height: 28%;
+		width: 70%;
+	}
+
+	.scrPkmInfo{
+		display:flex;
+		flex-direction: column;
+		margin-top: 90px;
+		width: 100%;
+		height: 80%;
+		border:1px solid black;
+		text-transform: capitalize;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.pkmNameInfo{
+	font-size:24px;
+	}
+
+	.pkmTypesInfo{
+		font-size:18px;
+	}
+}
