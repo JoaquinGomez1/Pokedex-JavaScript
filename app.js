@@ -11,8 +11,8 @@ class myPokemon{
 }
 
 var pokemonList = [];
-let input = document.querySelector('.searcher')
-let pokemonGenerationAmount = 151
+let input = document.querySelector('.searcher');
+let pokemonGenerationAmount = 151;
 
 
 // Make a request to the API, convert it into json and add a myPokemon object to the list.
