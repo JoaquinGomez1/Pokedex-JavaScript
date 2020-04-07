@@ -12,7 +12,7 @@ class myPokemon{
 
 var pokemonList = [];
 let input = document.querySelector('.searcher')
-let pokemonGenerationAmount = 386
+let pokemonGenerationAmount = 151
 
 
 // Make a request to the API, convert it into json and add a myPokemon object to the list.
@@ -103,6 +103,7 @@ function searchPkm(){
 			if(result[i].name == input || result[i].id == input){
 				let goTo = document.getElementById(`pokemon-${result[i].id}`);
  				goTo.scrollIntoView({block: "center"});
+ 				displayInfoScreen(result[i].id);
 
 			}
 		}
@@ -151,10 +152,12 @@ function displayInfoScreen(pokemonId){
 
 	for(let i = 0; i < 6 ; i++){
 		if(i == 0){
+			
 			let myVar = document.createElement('img')
 			myVar.classList.add(controlClasses[i])
 			controlList.push(myVar)
 		}else{
+			
 			let myVar = document.createElement('div')
 			myVar.classList.add(controlClasses[i])
 			controlList.push(myVar)
@@ -164,6 +167,14 @@ function displayInfoScreen(pokemonId){
 	infoScr.style.display = 'block';
 
 			// Closing infoScreen:
+
+	window.addEventListener('keyup', (event)=>{
+		if(event.key == 'Escape' && infoScr.style.display != 'none'){
+			infoScr.style.display = 'none';
+			closeScreen(controlClasses);
+		}
+	})
+
 	window.onclick = (event)=>{
 		if(event.target == infoScr){
 			infoScr.style.display = 'none';
@@ -175,6 +186,7 @@ function displayInfoScreen(pokemonId){
 		closeScreen(controlClasses);
 	}
 
+	
 	createInfoScrContent(pokemonId, controlList);
 
 }
@@ -182,12 +194,12 @@ function displayInfoScreen(pokemonId){
 function closeScreen(controlClasses){
 	let infoContent = document.querySelector('.scrPkmInfo');
 	for(let i = 0; i < 6; i++){
-		let element = document.querySelector(`.${controlClasses[i]}`)
+		let element = document.querySelector(`.${controlClasses[i]}`);
 		infoContent.removeChild(element);
 	}
 }
 
-function createInfoScrContent(pokemonId, controlList){
+function createInfoScrContent(pokemonId, controlList){ // TODO: improve if/else logic.
 	Promise.all(pokemonList).then((result)=>{  // Creating the information screen's content
 		let thisPokemon = result[pokemonId - 1]
 		let pokemonContent = ['img','name', 'types', 'id', 'stats','abilities']
@@ -205,11 +217,18 @@ function createInfoScrContent(pokemonId, controlList){
 			}else if(pokemonContent[i] == 'stats'){
 				controlList[i].innerHTML = pokemonStatsList;
 				infoContent.appendChild(controlList[i]);
+			}else if(pokemonContent[i] == 'id'){
+				controlList[i].innerHTML = 'Id Number: '+ thisPokemon[pokemonContent[i]];
+				infoContent.appendChild(controlList[i]);
+			}
+			else if(pokemonContent[i] == 'abilities'){
+				controlList[i].innerHTML = 'Ability: ' + thisPokemon[pokemonContent[i]];
+				infoContent.appendChild(controlList[i]);
 			}
 			else{
 				controlList[i].innerHTML = thisPokemon[pokemonContent[i]];
 				infoContent.appendChild(controlList[i]);
-			} 
+			}
 		}
 	})
 }
