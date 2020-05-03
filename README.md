@@ -9,6 +9,7 @@ All data from each pokemon was obtained from:
 https://pokeapi.co/
 
 
+Español:
 Aprendiendo el funcionamiento de una API, Async JavaScript y Promises.
 Planeo seguir trabajando en este proyecto a medida que voy aprendiendo mas cosas, por ahora lo único que hace esta app es tomar la información de los servidores de la PokeAPI y mostrar datos del pokemon seleccionado. 
 
