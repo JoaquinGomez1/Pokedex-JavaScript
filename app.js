@@ -14,7 +14,7 @@ let input = document.querySelector('.searcher');
 let pokemonGenerationAmount = 150;
 
 
-// Make a request to the API, convert it into json and add a myPokemon object to the list.
+// Make a request to the API, convert it into json and push myPokemon object to the list.
 for(let i = 0; i <= pokemonGenerationAmount; i++){
 	pokemonList.push(fetch(`https://pokeapi.co/api/v2/pokemon/${i + 1}`) // adding +1 to i because pokemon's Id's start at one
 	.then((res) => {return res.json()}).then((data)=>{
@@ -72,6 +72,7 @@ function searchPkm(){
 	Promise.all(pokemonList).then((result) =>{
 		input = document.querySelector('.searcher')
 		input = input.value.toLowerCase();
+
 		for(let i = 0; i < pokemonList.length; i++){
 			if(result[i].name == input || result[i].id == input){
 				let goTo = document.getElementById(`pokemon-${result[i].id}`);
@@ -80,6 +81,8 @@ function searchPkm(){
 
 			}
 		}
+
+		input.textvalue = ''
 	})
 }
 
@@ -87,26 +90,25 @@ function searchPkm(){
 function displayModal(pokemonId){
 	let infoScr     = document.querySelector('.infoScr');
 	let closeBtn    = document.querySelector('.closeInfoScr');
-	let infoContent = document.querySelector('.scrPkmInfo');
-	let documentsList = []
+	let domList = []
 	let documentsClasses = ['pkmImgInfo', 'pkmNameInfo',
 	'pkmTypesInfo', 'pkmIdInfo','pkmStatsInfo','pkmAbilitiesInfo']
 	let classesAmount = documentsClasses.length;
 
 	for(let i = 0; i < classesAmount; i++){
 		if(documentsClasses[i] == 'pkmImgInfo'){
-			let thisDocument = document.createElement('img')
-			thisDocument.classList.add(documentsClasses[i])
-			documentsList.push(thisDocument)
+			let thisDom = document.createElement('img')
+			thisDom.classList.add(documentsClasses[i])
+			domList.push(thisDom)
 		}else{
-			let thisDocument = document.createElement('div')
-			thisDocument.classList.add(documentsClasses[i])
-			documentsList.push(thisDocument)
+			let thisDom = document.createElement('div')
+			thisDom.classList.add(documentsClasses[i])
+			domList.push(thisDom)
 		}
 	}
 
 	infoScr.style.display = 'block';
-	createModalContent(pokemonId, documentsList);
+	createModalContent(pokemonId, domList);
 
 			// Closing infoScreen:
 	window.addEventListener('keyup', (event)=>{
@@ -129,35 +131,43 @@ function displayModal(pokemonId){
 	}
 }
 
-function createModalContent(pokemonId, documentsList){ // TODO: improve if/else logic.
+function createModalContent(pokemonId, domList){ // TODO: improve if/else logic.
 	Promise.all(pokemonList).then((result)=>{  // Creating the modal's content
 		let thisPokemon = result[pokemonId - 1]
+		let pokemonType = getPrimaryType(thisPokemon.type)
 		let pokemonAttributes = ['img','name', 'types', 'id', 'stats','abilities']
 		let pokemonTypesList = getBothTypes(thisPokemon);
 		let pokemonStatsList = getPokemonStats(thisPokemon);
 		let infoContent = document.querySelector('.scrPkmInfo');
 
+		infoContent.style.backgroundColor = getBackgroundColor(pokemonType)
+
 		for(let i = 0; i < pokemonAttributes.length; i++){
 			if(pokemonAttributes[i] == 'img'){
-				documentsList[i].src = thisPokemon.img;
-				infoContent.appendChild(documentsList[i]);
+				domList[i].src = thisPokemon.img;
+				infoContent.appendChild(domList[i]);
+
 			}else if(pokemonAttributes[i] == 'types'){
-				documentsList[i].innerHTML = pokemonTypesList;
-				infoContent.appendChild(documentsList[i]);
+				domList[i].innerHTML = pokemonTypesList;
+				infoContent.appendChild(domList[i]);
+
 			}else if(pokemonAttributes[i] == 'stats'){
-				documentsList[i].innerHTML = pokemonStatsList.join('<br>');
-				infoContent.appendChild(documentsList[i]);
+				domList[i].innerHTML = pokemonStatsList.join('<br>');
+				infoContent.appendChild(domList[i]);
+
 			}else if(pokemonAttributes[i] == 'id'){
-				documentsList[i].innerHTML = 'Id Number: '+ thisPokemon[pokemonAttributes[i]];
-				infoContent.appendChild(documentsList[i]);
+				domList[i].innerHTML = 'Id Number: '+ thisPokemon[pokemonAttributes[i]];
+				infoContent.appendChild(domList[i]);
 			}
+
 			else if(pokemonAttributes[i] == 'abilities'){
-				documentsList[i].innerHTML = 'Ability: ' + thisPokemon[pokemonAttributes[i]];
-				infoContent.appendChild(documentsList[i]);
+				domList[i].innerHTML = 'Ability: ' + thisPokemon[pokemonAttributes[i]];
+				infoContent.appendChild(domList[i]);
 			}
-			else{
-				documentsList[i].innerHTML = thisPokemon[pokemonAttributes[i]];
-				infoContent.appendChild(documentsList[i]);
+
+			else{  // in this case the only option left is the 'name' attribute
+				domList[i].innerHTML = thisPokemon[pokemonAttributes[i]];
+				infoContent.appendChild(domList[i]);
 			}
 		}
 	})
@@ -166,11 +176,13 @@ function createModalContent(pokemonId, documentsList){ // TODO: improve if/else 
 function closeModal(documentsClasses){
 	let classesAmount = 6;
 	let infoContent = document.querySelector('.scrPkmInfo');
+
 	for(let i = 0; i < classesAmount; i++){
 		let element = document.querySelector(`.${documentsClasses[i]}`);
 		infoContent.removeChild(element);
 	}
 }
+
 
 function getBackgroundColor(pokmType){
  	const COLORS_BY_TYPE = {
@@ -192,7 +204,6 @@ function getBackgroundColor(pokmType){
  		steel: '#809296',
  		ghost: '#6060b0',
  		dark: '#4d5054'
-
  	}
  	// pokmType has to be in square brackets because the parameter passed to the function it's a string
  	return COLORS_BY_TYPE[pokmType];  

@@ -19,7 +19,6 @@
 	display:flex;
 	justify-content: center;
 	align-items: center;
-	width:;
 }
 
 .pokmnInfo{
@@ -42,6 +41,7 @@
 	font-size: 13px;
 	justify-content: center;
 	text-transform: capitalize;
+	text-shadow:1px 1px 5px black;
 	text-align: center;
 	user-select: none;
 	color:white;
@@ -77,7 +77,7 @@
 	background-color: #ededed;
   	margin: 6% auto; 
   	padding: 40px;
-  	border: 1px solid #888;
+	color:white;
   	width: 50%; 
   	height: 70%;	
   }
@@ -105,7 +105,7 @@
 	margin-top: 90px;
 	width: 100%;
 	height: 80%;
-	border:3px solid black;
+	border:2px solid black;
 	text-transform: capitalize;
 	justify-content: center;
 	align-items: center;
@@ -115,10 +115,13 @@
 .pkmImgInfo{
 	height: 40%;
 	display: inline-block;
-	float: left;
 	margin:auto;
+	cursor: pointer;
 }
 
+.pkmImgInfo:active{
+	transform: translateY(-5px);
+}
 
 .pkmNameInfo{
 	font-size:28px;
@@ -142,6 +145,7 @@
 	align-items:center;
 	z-index: 2;
 	box-shadow: 2px 4px 3px #707070;
+	cursor:pointer;
 }
 
 .toTopBtn:active{
@@ -161,18 +165,19 @@ a:hover{
 
 
 @media (max-width: 768px){
+
 	.infoScrContainer{
 		background-color: #fefefe;
-	  	margin: 6% auto; 
+	  	margin: 25% auto; 
 	  	border: 1px solid #888;
 	  	width: 100%; 
-	  	height: 90vh;
+	  	height: 70%;
 	  	font-size: 14px;
 	}
 
 	.pkmImgInfo{
-		height: 28%;
-		width: 70%;
+		height: 25%;
+		width: 30%;
 	}
 
 	.scrPkmInfo{
